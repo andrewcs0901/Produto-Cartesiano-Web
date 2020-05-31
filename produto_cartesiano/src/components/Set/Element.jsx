@@ -7,7 +7,7 @@ const Element = (props) => {
     }
 
     return (
-        <span onClick={onClick}>{props.value}</span>
+        <span onClick={onClick}>{props.value}(X)</span>
     )
 }
 
