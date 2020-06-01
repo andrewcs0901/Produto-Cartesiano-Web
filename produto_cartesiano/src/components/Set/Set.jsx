@@ -28,7 +28,7 @@ const Set = (props) => {
             <>
                 {leftBracket}
                 {elements.map((element, index) =>
-                    <span key={index} >
+                    <span key={index} style={{display:'flex'}}>
                         {index > 0 ? "," : ""}<Element value={element} action={removeElement} />
                     </span>)}
                 {rightBracket}
@@ -36,14 +36,14 @@ const Set = (props) => {
         )
     }
 
-    return (<>
-        <div>
-            <span>{props.name}:</span>{renderSet()}
+    return (<div style={{fontSize: '2em'}}>
+        <div style={{display: "flex"}}>
+            <div>{props.name}:</div>{renderSet()}
         </div>
         <div>
             <FormSet action={addElement} name={props.name} />
         </div>
-    </>)
+    </div>)
 }
 
 export default Set;

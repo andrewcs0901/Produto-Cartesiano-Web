@@ -2,13 +2,21 @@ import React from 'react';
 
 const Input = (props) => {
 
+    const onChange = (event) => {
+        props.onChange(event.target.value, props.index)
+    }
+
     return (
-        <input type={props.type || "text"} 
+        <div className={props.className}>
+            <input type={props.type || "text"}
                 name={props.name}
                 value={props.value}
-                onChange={props.onChange}
-                disabled={props.disabled}
-                />
+                onChange={onChange}
+                placeholder={props.name || "input"}
+                readOnly={props.disabled == 0}
+                
+            />
+        </div>
     )
 
 }
