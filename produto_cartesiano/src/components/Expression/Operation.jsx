@@ -1,33 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '../Buttons/Button';
+import OperationStyle from './OperationStyle';
 
-const notEquals = String.fromCodePoint(parseInt(2260, 16));
+const Operation = (props) => {
 
-const operations =[
-        {
-            name: "Aritmética", actions: ["+","-","x","/"]
-        },
-        {
-            name: "Lógica", actions: ["=",notEquals,">","<","||","&&"]
-        },
-        {
-            name: "Especial", actions: ["par","impar","primo"]
-        },
+    const { operations} = props;
+    const [marked, setMarked] = useState(props.marked);
 
-    ]
+    const handleClick = (event, type) => {
+        setMarked(event.target.name);
+        props.onClick(event.target.name, props.index || "operacao", type);
+    }
 
-const Operation = () => {
+    const renderOperations = () => {
+        if (operations)
+            return (<div className={props.name}>
+                {operations.map(
+                    operation => (
+                        <OperationStyle key={operation.name} className="Operation">
+                            <div>{operation.name}:</div>
+                            {operation.actions
+                                .map(action =>
+                                    <Button label={action}
+                                        key={action} onClick={handleClick}
+                                        status={marked === action}
+                                        type={operation.name}
+                                    />)}
+                        </OperationStyle>
+                    )
+                )}</div>)
+        else return (<></>)
+    }
 
-    const renderOperations = () => (
-        operations.map(
-            operation => (
-                <div key={operation.name}>
-                    {operation.name}:
-                    {operation.actions.map(action => <Button label={action} key={action}/>)}
-                </div>
-            )
-        )
-    )
 
     return renderOperations()
 }
