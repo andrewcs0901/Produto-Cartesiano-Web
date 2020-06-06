@@ -9,7 +9,8 @@ const Expression = (props) => {
 
     const [expression, setExpression] = useState({
         operacao: "",
-        type: ""
+        type: "",
+        operacao1: ""
     });
 
     const onSets = [aritmetica(), logica(), especial()];
@@ -40,7 +41,9 @@ const Expression = (props) => {
         <ExpressionStyle>
             {renderOperation(["conjunto_a", "conjunto_b"], "operacao1")}
             <div className="conditional">
-                <Operation onClick={updateExpression} operations={condition} index={condicional().name} marked={expression.Condicional} />
+                {(expression.operacao1 !== "" && expression.operacao1 !== "+" && expression.operacao1 !== "-") &&
+                    <Operation onClick={updateExpression} operations={condition} index={condicional().name} marked={expression.Condicional} />
+                }
             </div>
             {(expression.Condicional && expression.Condicional.length) && renderOperation(["conjunto_c", "conjunto_d"], "operacao2")}
         </ExpressionStyle>
