@@ -1,29 +1,37 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
 import Set from './components/Set/Set';
 import Expression from './components/Expression/Expression';
+import UseLocalStorage from './utils/UseLocalStorage';
+import API from './logic/API';
+import MainStyle from './MainStyle';
+
+
+const key = 'produtoCartesiano';
 
 const App = () => {
 
-  const [sets, updateSet] = useState({
-    set: []
-  });
+  const [sets, updateSet] =  UseLocalStorage( {set:[]}, key);
 
-  const updatesSet = (newSets) => {
-    updateSet({ ...sets, set: newSets });
+  const updatesSet = (newSet) => {
+    updateSet({ ...sets, set: newSet });
+  }
+
+  const callAPI = (expression) => {
+     API(expression, sets.set)
   }
 
   return (
-    <div className="App">
+    <MainStyle className="App">
       <header>
         <h1>Produto Cartesiano</h1>
       </header>
       <main>
         <h3>Conjuntos</h3>
-        <Set action={updatesSet} />
-        <Expression options={sets.set.filter(set => set.values.length).map(set => set.name)} />
+        <Set action={updatesSet} sets={sets.set}/>
+        <Expression options={sets.set?.filter(set => set.values.length).map(set => set.name)} calculate={callAPI} />
       </main>
-    </div>
+    </MainStyle>
   );
 }
 
