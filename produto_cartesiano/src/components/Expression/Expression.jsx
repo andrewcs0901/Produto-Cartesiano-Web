@@ -4,13 +4,16 @@ import Operation from './Operation';
 import Input from '../Inputs/Input';
 import { aritmetica, logica, especial, condicional } from './OperationsList';
 import ExpressionStyle from './ExpressionStyle';
+import Button from '../Buttons/Button';
 
 const Expression = (props) => {
 
     const [expression, setExpression] = useState({
         operacao: "",
         type: "",
-        operacao1: ""
+        operacao1: "",
+        equivalencia: "",
+        ready: false
     });
 
     const onSets = [aritmetica(), logica(), especial()];
@@ -22,6 +25,15 @@ const Expression = (props) => {
         })
     }
 
+    const SendExpression = () =>{
+        let auxExpression = {
+            conjunto_a: expression.conjunto_a,
+            conjunto_b: expression.conjunto_b,
+            operacao: expression.operacao || expression.operacao1
+        }
+        props.calculate(auxExpression);
+    }
+
     const renderOperation = (set, operacao) => (
         <div className="operationSet">
             <Select options={props.options}
@@ -30,8 +42,11 @@ const Expression = (props) => {
                 className="subSections"
                 standard={expression[set[0]]} />
             <Operation onClick={updateExpression} operations={onSets} name="subSections" marked={expression[operacao]} index={operacao} />
-            {expression[operacao] !== especial().name && <Input className="subSections" onChange={updateExpression} index={set[1]} />}
-            {(expression[operacao] === "+" || expression[operacao] === "-")
+            
+            {!especial().actions.some( action => action === expression[operacao]) && 
+                <Select className="subSections" onSelect={updateExpression} options={props.options} index={set[1]} standard={expression[set[1]]}/>
+            }
+            {aritmetica().actions.some(action => action === expression[operacao]) 
                 && <> = <Input type="number" onChange={updateExpression} index={"equivalencia"} value={expression.equivalencia} /></>}
         </div>
     )
@@ -41,11 +56,12 @@ const Expression = (props) => {
         <ExpressionStyle>
             {renderOperation(["conjunto_a", "conjunto_b"], "operacao1")}
             <div className="conditional">
-                {(expression.operacao1 !== "" && expression.operacao1 !== "+" && expression.operacao1 !== "-") &&
+                {(expression.operacao1 !== "" && !aritmetica().actions.some(action => action === expression.operacao1)) &&
                     <Operation onClick={updateExpression} operations={condition} index={condicional().name} marked={expression.Condicional} />
                 }
             </div>
             {(expression.Condicional && expression.Condicional.length) && renderOperation(["conjunto_c", "conjunto_d"], "operacao2")}
+            {<Button label={"Calcular"} onClick={SendExpression}/>}
         </ExpressionStyle>
 
     </div>)

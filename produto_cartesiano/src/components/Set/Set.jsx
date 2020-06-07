@@ -14,7 +14,7 @@ const Set = (props) => {
         index: 0,
         sets: []
     });
-    const { action, name } = props;
+    const { action} = props;
 
     const addElement = (value, name) => {
         SetElements({
