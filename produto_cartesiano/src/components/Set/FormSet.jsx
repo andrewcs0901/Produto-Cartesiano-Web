@@ -26,7 +26,7 @@ const FormSet = (props) => {
     }
 
     const submit = () => {
-        props.action(value);
+        props.action(value, props.name);
         setValue(initialState);
     }
 
