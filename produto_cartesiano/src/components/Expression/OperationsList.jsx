@@ -1,5 +1,5 @@
 const aritmetica = () => ({
-    name: "Aritmética", actions: ["+", "-", "x", "/"]
+    name: "Aritmética", actions: ["+", "-", "*", "/"]
 });
 const logica = () => (
     {

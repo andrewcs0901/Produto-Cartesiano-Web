@@ -13,7 +13,7 @@ const Input = (props) => {
                 value={props.value}
                 onChange={onChange}
                 placeholder={props.name || "input"}
-                readOnly={props.disabled == 0}
+                readOnly={props.disabled === 0}
                 
             />
         </div>
