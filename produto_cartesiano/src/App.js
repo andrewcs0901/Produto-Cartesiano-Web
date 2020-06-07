@@ -5,10 +5,12 @@ import Expression from './components/Expression/Expression';
 
 const App = () => {
 
-  const [sets, updateSet] = useState({});
+  const [sets, updateSet] = useState({
+    set: []
+  });
 
-  const updatesSet = (nameSet, collection) => {
-    updateSet({...sets, [nameSet]: collection})
+  const updatesSet = (newSets) => {
+    updateSet({ ...sets, set: newSets });
   }
 
   return (
@@ -18,9 +20,8 @@ const App = () => {
       </header>
       <main>
         <h3>Conjuntos</h3>
-        <Set name="X" action={updatesSet}/>
-        <Set name="Y"action={updatesSet}/>
-        <Expression options={Object.keys(sets).filter(name => sets[name].length)}/>
+        <Set action={updatesSet} />
+        <Expression options={sets.set.filter(set => set.values.length).map(set => set.name)} />
       </main>
     </div>
   );
