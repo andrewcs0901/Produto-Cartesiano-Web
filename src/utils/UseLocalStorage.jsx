@@ -4,8 +4,9 @@ const UseLocalStorage = (defaultValue, key) => {
     const [value, setValue] = useState(defaultValue);
     
     useEffect(() => {
+        
         const data = localStorage.getItem(key);
-        if (data) {
+        if (data) {   
             setValue(JSON.parse(data));
         }
     }, [key])

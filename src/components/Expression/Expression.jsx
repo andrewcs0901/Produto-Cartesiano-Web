@@ -6,8 +6,10 @@ import { aritmetica, logica, especial, condicional } from './OperationsList';
 import ExpressionStyle from './ExpressionStyle';
 import Button from '../Buttons/Button';
 
-const Expression = (props) => {
 
+const Expression = (props) => {
+    
+    
     const [expression, setExpression] = useState({
         operacao: "",
         type: "",
@@ -26,7 +28,8 @@ const Expression = (props) => {
         })
     }
 
-    const SendExpression = () => {
+    const SendExpression =   () => {
+        
         let auxExpression = {
             conjunto_a: expression.conjunto_a,
             conjunto_b: expression.conjunto_b
@@ -42,7 +45,8 @@ const Expression = (props) => {
                 `a${expression.operacao1}b${expression.operacao2}`
         }
         console.log(auxExpression);
-        props.calculate(auxExpression);
+      props.calculate(auxExpression)
+      
     }
 
     const InputShouldRender = (operationType, operationName) => {
@@ -89,6 +93,7 @@ const Expression = (props) => {
                 && !aritmetica().actions.some(action => action === expression.operacao1))
                 && renderOperation(["conjunto_b"], "operacao2")}
             {<Button label={"Calcular"} onClick={SendExpression} />}
+            
         </ExpressionStyle>
 
     </div>)
