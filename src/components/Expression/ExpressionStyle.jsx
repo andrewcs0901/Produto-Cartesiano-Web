@@ -22,6 +22,10 @@ const OperationStyle = styled.div`
             width: 10%;
             padding: 5%
         }
+        > button{
+            height: 2em;
+            margin: 10%;
+        }
     `
 
 export default OperationStyle
