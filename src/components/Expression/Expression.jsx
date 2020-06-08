@@ -41,10 +41,8 @@ const Expression = (props) => {
                 auxExpression.operacao = expression.operacao1
         }
         else {
-            auxExpression.logica = {
-                "a": expression.operacao1,
-                "b": expression.operacao2
-            }
+            auxExpression.logica =
+                `a${expression.operacao1}b${expression.operacao2}`
         }
         console.log(auxExpression);
       let result = await props.calculate(auxExpression)
@@ -81,9 +79,9 @@ const Expression = (props) => {
         </div>
     )
 
-    return (<div>
+    return (<div className="Expression">
         <h3>Expressão</h3>
-        <ExpressionStyle>
+        <ExpressionStyle className="Main-Section">
             {renderOperation(["conjunto_a", "conjunto_b"], "operacao1")}
             <div className="conditional">
                 {(expression.operacao1 !== "" && !aritmetica().actions.some(action => action === expression.operacao1)) &&
