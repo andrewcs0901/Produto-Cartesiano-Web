@@ -12,13 +12,13 @@ const key = 'produtoCartesiano';
 const App = () => {
 
   const [sets, updateSet] =  UseLocalStorage( {set:[]}, key);
-
+  
   const updatesSet = (newSet) => {
     updateSet({ ...sets, set: newSet });
   }
 
   const callAPI = (expression) => {
-     API(expression, sets.set)
+    return API(expression, sets.set)
   }
 
   return (
@@ -30,6 +30,7 @@ const App = () => {
         <h3>Conjuntos</h3>
         <Set action={updatesSet} sets={sets.set}/>
         <Expression options={sets.set?.filter(set => set.values.length).map(set => set.name)} calculate={callAPI} />
+        
       </main>
     </MainStyle>
   );
