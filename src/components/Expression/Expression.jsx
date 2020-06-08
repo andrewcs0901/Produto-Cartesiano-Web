@@ -6,8 +6,10 @@ import { aritmetica, logica, especial, condicional } from './OperationsList';
 import ExpressionStyle from './ExpressionStyle';
 import Button from '../Buttons/Button';
 
-const Expression = (props) => {
 
+const Expression = (props) => {
+    
+    
     const [expression, setExpression] = useState({
         operacao: "",
         type: "",
@@ -72,7 +74,6 @@ const Expression = (props) => {
         if (Condicional.length) {
             auxExpression.logica += Condicional + buildLogicQuery(auxExpression.logica, operacao2, equivalencia2, "b");
         }
-        console.log(auxExpression)
         props.calculate(auxExpression);
     }
 
@@ -89,8 +90,6 @@ const Expression = (props) => {
             return props.options;
         let option1 = expression.conjunto_a.length ? expression.conjunto_a : expression.conjunto_x.length ? expression.conjunto_x : expression.conjunto_z;
         let option2 = expression.conjunto_b.length ? expression.conjunto_b : expression.conjunto_x.length ? expression.conjunto_x : expression.conjunto_z;
-        //console.log(!expression.conjunto_b.length);
-        //console.log(expression.conjunto_b);
         return [option1, option2]
     }
 
@@ -133,6 +132,7 @@ const Expression = (props) => {
             {expression.Condicional.length > 0
                 && renderOperation(["conjunto_x", "conjunto_z", "equivalencia2"], "operacao2")}
             {<Button label={"Calcular"} onClick={SendExpression} />}
+            
         </ExpressionStyle>
 
     </div>)
