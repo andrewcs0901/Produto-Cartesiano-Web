@@ -5,11 +5,11 @@ import Input from '../Inputs/Input';
 import { aritmetica, logica, especial, condicional } from './OperationsList';
 import ExpressionStyle from './ExpressionStyle';
 import Button from '../Buttons/Button';
-import ListAnswer from '../ListAnswers/listAnswers'
+
 
 const Expression = (props) => {
     
-    const [resultados, setResultados] = useState({})
+    
     const [expression, setExpression] = useState({
         operacao: "",
         type: "",
@@ -28,7 +28,7 @@ const Expression = (props) => {
         })
     }
 
-    const SendExpression =  async () => {
+    const SendExpression =   () => {
         
         let auxExpression = {
             conjunto_a: expression.conjunto_a,
@@ -45,8 +45,8 @@ const Expression = (props) => {
                 `a${expression.operacao1}b${expression.operacao2}`
         }
         console.log(auxExpression);
-      let result = await props.calculate(auxExpression)
-      setResultados(result)
+      props.calculate(auxExpression)
+      
     }
 
     const InputShouldRender = (operationType, operationName) => {
@@ -93,7 +93,7 @@ const Expression = (props) => {
                 && !aritmetica().actions.some(action => action === expression.operacao1))
                 && renderOperation(["conjunto_b"], "operacao2")}
             {<Button label={"Calcular"} onClick={SendExpression} />}
-            {Object.keys(resultados).length > 0 ?<ListAnswer resultados={resultados}/> : <></>}
+            
         </ExpressionStyle>
 
     </div>)
