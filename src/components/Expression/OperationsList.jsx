@@ -1,9 +1,9 @@
 const aritmetica = () => ({
-    name: "Aritmética", actions: ["+", "-", "*", "/"]
+    name: "Aritmética", actions: ["+", "-", "*", "/", "%"]
 });
 const logica = () => (
     {
-        name: "Lógica", actions: ["==", "!=", ">", "<"]
+        name: "Lógica", actions: ["==", "!=", ">",">=", "<","<="]
     }
 );
 const especial = () => (
