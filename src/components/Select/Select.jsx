@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 const Select = (props) => {
 
     const standard = "Selecionar";
-    const [value, setValue] = useState(props.standard || standard);
+    const [value, setValue] = useState(props.standard !== undefined? props.standard : standard);
     const { onSelect, index } = props;
 
     const select = (event) => {
