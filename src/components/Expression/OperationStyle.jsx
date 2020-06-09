@@ -20,9 +20,6 @@ button{
         background-color: #252525;
         color: white;
     }
-    :active{
-        background-color: pink
-    }
 }
 button.active{
     background-color: blue;

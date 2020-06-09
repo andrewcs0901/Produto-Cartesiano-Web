@@ -1,23 +1,42 @@
-import React from 'react'
+import React, { useState, useEffect, } from 'react'
 import { ListContainer } from './styles'
 
 const letters = [
-  "A" , "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
-  "N", "O", "P", "Q", "R", "S", "T", "V", "W","X", "Y", "Z"
+  "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+  "N", "O", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z"
 ];
 export default function ListAnswers(props) {
 
-  return(
+  const [index, setState] = useState(0)
+  const [results, setResults] = useState([])
+
+  const { sucess } = props.resultados;
+
+  useEffect(() => {
+    if (sucess) {
+      setState(index + 1);
+      setResults([...results, props.resultados]);
+    }
+  }, [props, sucess])
+
+
+
+  return (
+
     <ListContainer>
       <h2>Respostas: </h2>
-      {props.resultados && <ul>        
-        <li key={props.resultados.modulo_conjunto_universo+'1'}> U =  [{props.resultados.conjunto_universo.map(result =>{
-          return (<>{ "("+ result[0]+ ",  "} {result[1] + ") "}</>)
-        })}] |U| = {props.resultados.modulo_conjunto_universo}</li>
-        <li key={props.resultados.modulo_resposta+'8'}> {letters[props.resultados.modulo_resposta] + " ="}  [{props.resultados.resposta.map(result =>{
-          return (<>{ "("+ result[0]+ ",  "} {result[1] + ") "}</>)
-        })}] { "|"+ letters[props.resultados.modulo_resposta]+ "| = " + props.resultados.modulo_resposta} </li>
-      </ul>}
+      {(results.length > 0) ? results.map((results,index) => (
+        <ul>
+          <li key={`modulo universo - ${letters[index]}`}> U =  [{results.conjunto_universo.map(result => {
+            return (<span key={`Universo - ${result[0]}-${result[1]}`}>{"(" + result[0] + ",  "} {result[1] + ") "}</span>)
+          })}] |U| = {results.modulo_conjunto_universo}</li>
+          <li key={`modulo resposta - ${letters[index]}`}> {letters[index] + " ="}  [{results.resposta.map(result => {
+            return (<span key={`Resposta - ${result[0]}-${result[1]}`}>{"(" + result[0] + ",  "} {result[1] + ") "}</span>)
+          })}] {"|" + letters[index] + "| = " + results.modulo_resposta} </li>
+        </ul>
+      ))
+        : <div></div>
+      }
     </ListContainer>
   )
 }

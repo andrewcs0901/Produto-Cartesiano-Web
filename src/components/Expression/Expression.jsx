@@ -6,30 +6,31 @@ import { aritmetica, logica, especial, condicional } from './OperationsList';
 import ExpressionStyle from './ExpressionStyle';
 import Button from '../Buttons/Button';
 
+const defaultState = {
+    operacao: "",
+    type: "",
+    operacao1: "",
+    operacao2: "",
+    equivalencia1: "",
+    equivalencia2: "",
+    conjunto_a: "",
+    conjunto_b: "",
+    conjunto_x: "",
+    conjunto_z: "",
+    Condicional: "",
+    ready: false
+}
+
 
 const Expression = (props) => {
-    
-    
-    const [expression, setExpression] = useState({
-        operacao: "",
-        type: "",
-        operacao1: "",
-        operacao2: "",
-        equivalencia1: "",
-        equivalencia2: "",
-        conjunto_a: "",
-        conjunto_b: "",
-        conjunto_x: "",
-        conjunto_z: "",
-        Condicional: "",
-        ready: false
-    });
+
+
+    const [expression, setExpression] = useState(defaultState);
 
     const onSets = [aritmetica(), logica(), especial()];
     const condition = [condicional()];
 
     const updateExpression = (value, index, type = expression.type) => {
-        console.log(value, index);
         setExpression({
             ...expression, type: type, [index]: value !== "X" ? value : ""
         })
@@ -62,11 +63,11 @@ const Expression = (props) => {
     const SendExpression = () => {
 
         const { conjunto_a, conjunto_b, conjunto_x, conjunto_z,
-                operacao1, operacao2, 
-                equivalencia1, equivalencia2, 
-                Condicional } = expression;
+            operacao1, operacao2,
+            equivalencia1, equivalencia2,
+            Condicional } = expression;
         let auxExpression = {
-            conjunto_a: conjunto_a,
+            conjunto_a: conjunto_a || conjunto_z,
             conjunto_b: conjunto_b || conjunto_x,
             logica: ""
         }
@@ -74,6 +75,7 @@ const Expression = (props) => {
         if (Condicional.length) {
             auxExpression.logica += Condicional + buildLogicQuery(auxExpression.logica, operacao2, equivalencia2, "b");
         }
+        setExpression(defaultState);
         props.calculate(auxExpression);
     }
 
@@ -86,7 +88,8 @@ const Expression = (props) => {
         if ((!expression.conjunto_a.length || !expression.conjunto_b.length) &&
             (!expression.conjunto_x.length && !expression.conjunto_z.length))
             return props.options;
-        if (expression.conjunto_a === expression.conjunto_b)
+        if (expression.conjunto_a === expression.conjunto_b ||
+            (expression.conjunto_x === expression.conjunto_a && (expression.conjunto_x !== expression.conjunto_b && !expression.conjunto_b.length)))
             return props.options;
         let option1 = expression.conjunto_a.length ? expression.conjunto_a : expression.conjunto_x.length ? expression.conjunto_x : expression.conjunto_z;
         let option2 = expression.conjunto_b.length ? expression.conjunto_b : expression.conjunto_x.length ? expression.conjunto_x : expression.conjunto_z;
@@ -111,14 +114,14 @@ const Expression = (props) => {
                     index={set[1]}
                     standard={expression[set[1]]} />}
 
-            {InputShouldRender(aritmetica, operationName)
-                && <> =
+            <div className="subSections input-expression">{InputShouldRender(aritmetica, operationName)
+                && <> <span className="equal-symbol">=</span>
                     <Input type="number" onChange={updateExpression} index={set[2]} value={expression[set[2]]} /></>}
-            {
-                InputShouldRender(logica, operationName)
-                &&
-                <Input type="number" onChange={updateExpression} index={set[2]} value={expression[set[2]]} />
-            }
+                {
+                    InputShouldRender(logica, operationName)
+                    &&
+                    <Input type="number" onChange={updateExpression} index={set[2]} value={expression[set[2]]} />
+                }</div>
         </div>
     )
 
@@ -131,8 +134,11 @@ const Expression = (props) => {
             </div>
             {expression.Condicional.length > 0
                 && renderOperation(["conjunto_x", "conjunto_z", "equivalencia2"], "operacao2")}
-            {<Button label={"Calcular"} onClick={SendExpression} />}
-            
+            {<Button label={"Calcular"} onClick={SendExpression} disabled={
+                (InputShouldRender(especial, "operacao1")
+                    && expression.operacao2.length === 0) || (expression.operacao1.length === 0 || expression.conjunto_a.length === 0)
+            } />}
+
         </ExpressionStyle>
 
     </div>)

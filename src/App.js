@@ -10,7 +10,7 @@ const key = 'produtoCartesiano';
 
 const App = () => {
 
-  const [resultados, setResultados] = useState()
+  const [resultados, setResultados] = useState([])
   const [sets, updateSet] =  UseLocalStorage( {set:[]}, key);
   
   const updatesSet = (newSet) => {
@@ -18,7 +18,8 @@ const App = () => {
   }
 
   const callAPI = async (expression) => {
-    let result = await API(expression, sets.set)
+    let result = await API(expression, sets.set);
+    console.log(result)
     setResultados(result)
     return result  
   }

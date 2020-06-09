@@ -10,7 +10,7 @@ const Element = (props) => {
     }
 
     return (
-        <ElementStyle className="Set">{props.value}<div className="removeSet" onClick={onClick}>X</div></ElementStyle>
+        <ElementStyle className="Set">{props.value}<div className="removeSet" onClick={onClick} title={`Excluir ${props.value}`}>X</div></ElementStyle>
     )
 }
 

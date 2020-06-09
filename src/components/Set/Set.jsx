@@ -38,14 +38,28 @@ const Set = (props) => {
         index++;
     }
 
+    const deleteSet = (event) => {
+        let newSet = sets;
+        let index = newSet.map(set => set.name).indexOf(event.target.id);
+        newSet.splice(index, 1);
+        for(let i = 0; i < newSet.length; i++)
+            newSet[i].name = setNames[i];
+        action(
+            newSet
+        )
+    }
+
 
     const renderSet = () => {
         return (
             <SetStyles>
                 {sets.map(set => (
                     <div key={set.name} className="set-box">
+                        <div className="set-delete">
+                            <span className="delete-action" title="Excluir Conjunto" onClick={deleteSet} id={set.name}>X</span>
+                        </div>
                         <div className="set-view">
-                            <div className="set-name">{set.name}:</div>
+                            <div className="set-name" title={`Conjunto ${set.name}`}>{set.name}:</div>
                             <div className="set-brackets">{leftBracket}</div>
                             <div className="set-elements">
                                 {set.values.map((element, index) =>
