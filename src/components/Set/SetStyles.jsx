@@ -14,6 +14,32 @@ const SetStyles = styled.div`
         border-radius: 10px;
         box-shadow: 1px 1px 12px #00000042;
         margin: 1%;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+    div.set-delete{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        span.delete-action{
+            background-color: red;
+            color: white;
+            border-radius: 56%;
+            font-family: monospace;
+            width: 1.2em;
+            text-align: center;
+            height: 1.1em;
+            border: 1px solid #8a8a8a;
+            transition: 800ms;
+            transition-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+            :hover{
+                cursor: pointer;
+                box-shadow: 1px 1px 9px #565656;
+                font-size: 1.1em;
+            }
+        }
+
     }
     div.set-view{
         display: flex;

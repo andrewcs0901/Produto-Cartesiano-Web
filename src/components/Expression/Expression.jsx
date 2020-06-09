@@ -29,7 +29,6 @@ const Expression = (props) => {
     const condition = [condicional()];
 
     const updateExpression = (value, index, type = expression.type) => {
-        console.log(value, index);
         setExpression({
             ...expression, type: type, [index]: value !== "X" ? value : ""
         })
